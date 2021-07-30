@@ -28,6 +28,21 @@ describe('Influx', () => {
     }).catch(done);
   });
 
+  it('write line', done => {
+    const data = influx.writeLine({
+      measurement: 'cpu_load_short',
+      tags: {
+        host: 'server01',
+        region: 'us-west',
+      },
+      fields: {
+        value: 0.64,
+      },
+    });
+    assert.equal(data[0], 'cpu_load_short,host=server01,region=us-west value=0.64');
+    done();
+  });
+
   it('write point', done => {
     influx.write({
       measurement: 'cpu_load_short',

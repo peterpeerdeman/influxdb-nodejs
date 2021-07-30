@@ -79,6 +79,16 @@ describe('Client', () => {
     assert.equal(client.writeQueueLength, 1);
   });
 
+  it('write queue lineformat', done => {
+      assert.equal(client.writeQueueLength, 1);
+      const arr = client.writeQueueLineFormat();
+      assert.equal(arr.length, 1 );
+      assert.match(arr[0], /http,spdy=fast,type=3 use=200,uuid="vicanso" \d*/);
+      assert.equal(client.writeQueueLength, 1);
+      done();
+  });
+
+
   it('sync write queue', done => {
     client.syncWrite().then(() => {
       return client.query('http')
